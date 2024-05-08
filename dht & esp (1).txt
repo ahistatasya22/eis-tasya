@@ -1,0 +1,39 @@
+#include <DHT.h>
+DHT dht(15, DHT22); //Pin, Jenis DHT
+
+void setup(){
+  pinMode(2, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+  Serial.begin(115200);
+  dht.begin();
+}
+
+void loop(){
+  float kel = dht.readHumidity();
+  float suh = dht.readTemperature();
+
+if(suh<30){
+  digitalWrite(2, HIGH);
+  digitalWrite(4, LOW);
+  digitalWrite(5, LOW);
+}
+if(suh>=30){
+  digitalWrite(2, LOW);
+  digitalWrite(4, HIGH);
+  digitalWrite(5, LOW);
+}
+if(suh>60){
+  digitalWrite(2, LOW);
+  digitalWrite(4, LOW);
+  digitalWrite(5, HIGH);
+}
+  Serial.print("kelembaban: ");
+  Serial.print(kel);
+  Serial.print(" ");
+  Serial.print("suhu: ");
+  Serial.println(suh);
+  
+  delay(1000);
+}
+
